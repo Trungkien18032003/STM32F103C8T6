@@ -92,7 +92,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  8000154:	60b9      	str	r1, [r7, #8]
  8000156:	607a      	str	r2, [r7, #4]
     // --- GIAI ĐOẠN 1: Trục 1 Xanh, Trục 2 đỏ ---
-    // Trục 1: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bật (SET)
+    // Trục 1: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_SET);
  8000158:	2201      	movs	r2, #1
  800015a:	2180      	movs	r1, #128	@ 0x80
@@ -108,7 +108,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  800016e:	2120      	movs	r1, #32
  8000170:	4842      	ldr	r0, [pc, #264]	@ (800027c <TrafficLight_Process+0x130>)
  8000172:	f000 fc83 	bl	8000a7c <HAL_GPIO_WritePin>
-    // Trục 2: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bât (SET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
  8000176:	2200      	movs	r2, #0
  8000178:	f44f 6180 	mov.w	r1, #1024	@ 0x400
@@ -129,7 +129,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  800019c:	f000 f9e2 	bl	8000564 <HAL_Delay>
 
     // --- GIAI ĐOẠN 2: Trục 1 vàng, Trục 2 đỏ ---
-    // Trục 1: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    // Trục 1: Xanh tắt (SET), Vàng bật (SET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
  80001a0:	2200      	movs	r2, #0
  80001a2:	2180      	movs	r1, #128	@ 0x80
@@ -145,7 +145,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  80001b6:	2120      	movs	r1, #32
  80001b8:	4830      	ldr	r0, [pc, #192]	@ (800027c <TrafficLight_Process+0x130>)
  80001ba:	f000 fc5f 	bl	8000a7c <HAL_GPIO_WritePin>
-    // Trục 2: Xanh tắt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bật (SET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
  80001be:	2200      	movs	r2, #0
  80001c0:	2180      	movs	r1, #128	@ 0x80
@@ -182,7 +182,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  80001f8:	2120      	movs	r1, #32
  80001fa:	4820      	ldr	r0, [pc, #128]	@ (800027c <TrafficLight_Process+0x130>)
  80001fc:	f000 fc3e 	bl	8000a7c <HAL_GPIO_WritePin>
-    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    // Trục 2: Xanh bật (RESET), Vàng tắt (RESET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_SET);
  8000200:	2201      	movs	r2, #1
  8000202:	f44f 6180 	mov.w	r1, #1024	@ 0x400
@@ -219,7 +219,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
  8000240:	2120      	movs	r1, #32
  8000242:	480e      	ldr	r0, [pc, #56]	@ (800027c <TrafficLight_Process+0x130>)
  8000244:	f000 fc1a 	bl	8000a7c <HAL_GPIO_WritePin>
-    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    // Trục 2: Xanh tắt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
  8000248:	2200      	movs	r2, #0
  800024a:	f44f 6180 	mov.w	r1, #1024	@ 0x400

@@ -59,22 +59,22 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
 void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t red_time)
 {
     // --- GIAI ĐOẠN 1: Trục 1 Xanh, Trục 2 đỏ ---
-    // Trục 1: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bật (SET)
+    // Trục 1: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_RESET);
-    // Trục 2: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bât (SET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_SET);
     HAL_Delay(green_time);
 
     // --- GIAI ĐOẠN 2: Trục 1 vàng, Trục 2 đỏ ---
-    // Trục 1: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    // Trục 1: Xanh tắt (SET), Vàng bật (SET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
-    // Trục 2: Xanh tắt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bật (SET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_RESET);
@@ -85,7 +85,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
-    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    // Trục 2: Xanh bật (RESET), Vàng tắt (RESET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_RESET);
@@ -96,7 +96,7 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
     HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
-    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    // Trục 2: Xanh tắt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
     HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_RESET);
