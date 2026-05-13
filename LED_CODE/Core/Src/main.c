@@ -31,9 +31,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//uint32_t green_time = 3000;
-//uint32_t yellow_time = 2000;
-//uint32_t red_time = 5000;
+#define T_GREEN 3000
+#define T_YELLOW 2000
+#define T_YELLOW 5000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,21 +58,49 @@ void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t re
 /* USER CODE BEGIN 0 */
 void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t red_time)
 {
+    // --- GIAI ĐOẠN 1: Trục 1 Xanh, Trục 2 đỏ ---
+    // Trục 1: Xanh tắt (RESET), Vàng tắt (RESET), Đỏ bật (SET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_RESET);
+    // Trục 2: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_SET);
+    HAL_Delay(green_time);
 
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-	HAL_Delay(red_time);
+    // --- GIAI ĐOẠN 2: Trục 1 vàng, Trục 2 đỏ ---
+    // Trục 1: Xanh bật (SET), Vàng tắt (RESET), Đỏ tắt (RESET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
+    // Trục 2: Xanh tắt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_RESET);
+    HAL_Delay(yellow_time);
 
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
-	HAL_Delay(green_time);
+    // --- GIAI ĐOẠN 3: Trục đỏ, Trục 2 xanh ---
+    // Trục 1: Xanh tẳt (RESET), Vàng bật (SET), Đỏ tắt (RESET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_RESET);
+    HAL_Delay(green_time);
 
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-	HAL_Delay(yellow_time);
+    // --- GIAI ĐOẠN 4: Trục 1 ĐỎ, Trục 2 Xanh ---
+    // Trục 1: Giữ nguyên Đỏ bật
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, GPIO_PIN_SET);
+    // Trục 2: Xanh tắt (RESET), Vàng tắt (SET), Đỏ bật (SET)
+    HAL_GPIO_WritePin(GPIOA, LED_GREEN1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, LED_YELLOW1_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin, GPIO_PIN_RESET);
+    HAL_Delay(yellow_time);
 }
 /* USER CODE END 0 */
 
@@ -84,7 +112,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	//TODO traffic_light
+	//TODO ex3
 
 
 
@@ -114,6 +142,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
 	  TrafficLight_Process(3000, 2000, 5000);

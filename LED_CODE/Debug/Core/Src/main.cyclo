@@ -1,5 +1,5 @@
 ../Core/Src/main.c:59:6:TrafficLight_Process	1
-../Core/Src/main.c:83:5:main	1
-../Core/Src/main.c:131:6:SystemClock_Config	3
-../Core/Src/main.c:168:13:MX_GPIO_Init	1
-../Core/Src/main.c:201:6:Error_Handler	1
+../Core/Src/main.c:111:5:main	1
+../Core/Src/main.c:160:6:SystemClock_Config	3
+../Core/Src/main.c:197:13:MX_GPIO_Init	1
+../Core/Src/main.c:233:6:Error_Handler	1
