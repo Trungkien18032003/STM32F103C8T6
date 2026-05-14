@@ -31,10 +31,60 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//uint32_t green_time = 3000;
-//uint32_t yellow_time = 2000;
-//uint32_t red_time = 5000;
+typedef struct{
+	uint16_t pintoTurnON;
+	uint16_t pintoTurnOFF;
+	uint32_t delayTime;
+}TrafficState;
+
+#define TIME_GREEN  3000
+#define TIME_YELLOW 2000
+
+
+TrafficState states[4] = {
+    // -------------------------------------------------------------------------
+    // STATE 0: Trục 1 XANH, Trục 2 ĐỎ
+    // Trục 1 (PA7 sáng, PA5-6 tắt) | Trục 2 (PA8 sáng, PA9-10 tắt)
+    // -------------------------------------------------------------------------
+    {
+        (LED_GREEN_Pin | LED_RED1_Pin),                                 // BẬT: Xanh 1, Đỏ 2
+        (LED_RED_Pin | LED_YELLOW_Pin | LED_YELLOW1_Pin | LED_GREEN1_Pin),      // TẮT: Đỏ 1, Vàng 1, Vàng 2, Xanh 2
+        TIME_GREEN
+    },
+
+    // -------------------------------------------------------------------------
+    // STATE 1: Trục 1 VÀNG, Trục 2 ĐỎ
+    // Trục 1 (PA6 sáng, PA5&7 tắt) | Trục 2 (PA8 sáng, PA9-10 tắt)
+    // -------------------------------------------------------------------------
+    {
+        (LED_YELLOW_Pin | LED_RED1_Pin),                                 // BẬT: Vàng 1, Đỏ 2
+        (LED_RED_Pin | LED_GREEN_Pin | LED_YELLOW1_Pin | LED_GREEN1_Pin),      // TẮT: Đỏ 1, Xanh 1, Vàng 2, Xanh 2
+        TIME_YELLOW
+    },
+
+    // -------------------------------------------------------------------------
+    // STATE 2: Trục 1 ĐỎ, Trục 2 XANH
+    // Trục 1 (PA5 sáng, PA6-7 tắt) | Trục 2 (PA10 sáng, PA8-9 tắt)
+    // -------------------------------------------------------------------------
+    {
+        (LED_RED_Pin | LED_GREEN1_Pin),                                // BẬT: Đỏ 1, Xanh 2
+        (LED_GREEN_Pin | LED_YELLOW_Pin | LED_RED1_Pin | LED_YELLOW1_Pin),       // TẮT: Vàng 1, Xanh 1, Đỏ 2, Vàng 2
+        TIME_GREEN
+    },
+
+    // -------------------------------------------------------------------------
+    // STATE 3: Trục 1 ĐỎ, Trục 2 VÀNG
+    // Trục 1 (PA5 sáng, PA6-7 tắt) | Trục 2 (PA9 sáng, PA8&10 tắt)
+    // -------------------------------------------------------------------------
+    {
+        (LED_RED_Pin | LED_YELLOW1_Pin),                                 // BẬT: Đỏ 1, Vàng 2
+        (LED_GREEN_Pin | LED_YELLOW_Pin | LED_RED1_Pin | LED_GREEN1_Pin),      // TẮT: Vàng 1, Xanh 1, Đỏ 2, Xanh 2
+        TIME_YELLOW
+    }
+};
 /* USER CODE END PD */
+
+
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -51,29 +101,23 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t red_time);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void TrafficLight_Process(uint32_t green_time, uint32_t yellow_time, uint32_t red_time)
+
+
+void TrafficLight_run_cycle(void)
 {
-
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-	HAL_Delay(red_time);
-
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
-	HAL_Delay(green_time);
-
-	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-	HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
-	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-	HAL_Delay(yellow_time);
+	for (int i =0; i<4; i++)
+	{
+		HAL_GPIO_WritePin(GPIOA, states[i].pintoTurnOFF, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, states[i].pintoTurnON, GPIO_PIN_SET);
+		HAL_Delay(states[i].delayTime);
+	}
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -84,7 +128,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	//TODO traffic_light
+	//TODO ex3.1 using struct, point
 
 
 
@@ -114,10 +158,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
+
+	  TrafficLight_run_cycle();
     /* USER CODE END WHILE */
-	  TrafficLight_Process(5000, 3000, 2000);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -175,10 +222,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin|LED_RED1_Pin
+                          |LED_YELLOW1_Pin|LED_GREEN1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin LED_GREEN_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin;
+  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin LED_GREEN_Pin LED_RED1_Pin
+                           LED_YELLOW1_Pin LED_GREEN1_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin|LED_RED1_Pin
+                          |LED_YELLOW1_Pin|LED_GREEN1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
